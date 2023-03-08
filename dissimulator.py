@@ -21,15 +21,18 @@ for name in argv[1:]:
     # print("processing " + name)
     # modify the last pixel slightly
     # note that the picture can be grey scaled
-    if len(raw_pic.shape) == 3:
-        if raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1][0] <= 127:
-            raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1][0] += 1
+    try:
+        if len(raw_pic.shape) == 3:
+            if raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1][0] <= 127:
+                raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1][0] += 1
+            else:
+                raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1][0] -= 1
         else:
-            raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1][0] -= 1
-    else:
-        if raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1] <= 127:
-            raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1] += 1
-        else:
-            raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1] -= 1
-    # overwrite
-    cv2.imwrite(name, raw_pic)
+            if raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1] <= 127:
+                raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1] += 1
+            else:
+                raw_pic[raw_pic.shape[0]-1][raw_pic.shape[1]-1] -= 1
+        # overwrite
+        cv2.imwrite(name, raw_pic)
+    except:
+        continue
