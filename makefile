@@ -2,7 +2,7 @@ APKLIST = $(foreach n,$(shell echo *.apk),$(basename $(n)))
 # NEWAPKLIST = $(addprefix output/,$(shell echo *.apk))
 SIGNPWD = 123456
 ## change it to your own
-PYTHON = "/c/Program Files/Python310/python"
+PYTHON = "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3"
 
 ALL: depackage package modify repackage sign run
 	@echo All things are done!
@@ -33,7 +33,7 @@ repackage:
 
 sign:
 	@echo signing...
-	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -verbose -signedjar output/$$i.apk output/$$i.apk apks;done
+	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks2 -verbose -signedjar output/$$i.apk output/$$i.apk apks2;done
 	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -verbose -signedjar output/$$i-modified.apk output/$$i-modified.apk apks;done
 
 run:
