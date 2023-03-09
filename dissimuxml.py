@@ -1,6 +1,9 @@
 from sys import argv
 from os import system
+
 import hashcmp
+import os
+
 import xml.etree.ElementTree as ET
 if __name__ == "__main__":
     if len(argv) == 1:
@@ -11,7 +14,7 @@ if __name__ == "__main__":
         if len(name.split('.')) < 2:
             print("error found with: " + name)
             continue
-        suffix = name.split('.')[-1]
+        suffix = os.path.splitext(name)[-1][1:]
         if suffix != "xml":
             continue
         base64before = hashcmp.hashfile(name)

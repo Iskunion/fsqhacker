@@ -4,7 +4,7 @@ if len(argv) == 1:
 
 import cv2
 import hashcmp
-
+import os
 from os import system
 
 print("processing " + str(len(argv) - 1) + " files")
@@ -14,7 +14,7 @@ for name in argv[1:]:
     if len(name.split('.')) < 2:
         print("error found with: " + name)
         continue
-    suffix = name.split('.')[-1]
+    suffix = os.path.splitext(name)[-1][1:]
     if suffix != "png":
         continue
     # record the sha-256 digest 
