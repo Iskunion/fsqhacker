@@ -11,12 +11,18 @@ $(shell mkdir -p output)
 $(shell mkdir -p result)
 
 depackage:
-	@echo Detected `echo *.apk | wc -w` apk\(s\).
-	@for i in `echo *.apk`; do echo depackaging $$i... && apktool d $$i;done
+	@echo Detected `echo $(APKLIST) | wc -w` apk\(s\).
+	@for i in $(APKLIST); do echo depackaging $$i.apk... && apktool d -s $$i.apk;done
  
 modify:
+	@echo processing pngs in res...
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.png" | xargs $(PYTHON) dissimulator.py;done
+	@echo processing xmls in res...
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuxml.py;done
+	@echo processing pngs in assets...
+	@for i in $(APKLIST);do find $$i/assets/ | grep --regex ".*\.png" | xargs $(PYTHON) dissimulator.py;done
+	@echo processing xmls in assets...
+	@for i in $(APKLIST);do find $$i/assets/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuxml.py;done
 
 package:
 	@echo Leave apks in $(abspath output)
@@ -32,8 +38,8 @@ repackage:
 
 sign:
 	@echo signing...
-	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -verbose -signedjar output/$$i.apk output/$$i.apk apks;done
-	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -verbose -signedjar output/$$i-modified.apk output/$$i-modified.apk apks;done
+	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -signedjar output/$$i.apk output/$$i.apk apks;done
+	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks2 -signedjar output/$$i-modified.apk output/$$i-modified.apk apks2;done
 
 run:
 	@echo runing
