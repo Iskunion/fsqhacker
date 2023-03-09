@@ -18,6 +18,9 @@ modify:
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.png" | xargs $(PYTHON) dissimulator.py;done
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuxml.py;done
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuwebp.py;done
+	@for i in $(APKLIST);do find $$i/assets/ | grep --regex ".*\.png" | xargs $(PYTHON) dissimulator.py;done
+	@for i in $(APKLIST);do find $$i/assets/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuxml.py;done
+	@for i in $(APKLIST);do find $$i/assets/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuwebp.py;done
 
 package:
 	@echo Leave apks in $(abspath output)
@@ -33,7 +36,7 @@ repackage:
 
 sign:
 	@echo signing...
-	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks2 -verbose -signedjar output/$$i.apk output/$$i.apk apks2;done
+	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -verbose -signedjar output/$$i.apk output/$$i.apk apks;done
 	@for i in $(APKLIST);do echo $(SIGNPWD) | jarsigner -keystore apks -verbose -signedjar output/$$i-modified.apk output/$$i-modified.apk apks;done
 
 run:
