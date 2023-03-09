@@ -17,6 +17,7 @@ depackage:
 modify:
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.png" | xargs $(PYTHON) dissimulator.py;done
 	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuxml.py;done
+	@for i in $(APKLIST);do find $$i/res/ | grep --regex ".*\.xml" | xargs $(PYTHON) dissimuwebp.py;done
 
 package:
 	@echo Leave apks in $(abspath output)
