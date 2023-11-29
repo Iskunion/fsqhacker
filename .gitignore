@@ -1,0 +1,12 @@
+*.apk
+*.csv
+output
+result
+*
+!fsquadra
+!*.jar
+!.gitignore
+!Makefile
+!*.py
+!origin.jks
+!modify.jks
